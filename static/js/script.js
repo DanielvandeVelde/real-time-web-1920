@@ -6,6 +6,7 @@ window.addEventListener("load", () => {
     e.preventDefault();
     if (/\S/.test(document.getElementById("m").value)) {
       socket.emit("chat message", document.getElementById("m").value);
+      appendMessage(document.getElementById("m").value);
     }
     document.getElementById("m").value = "";
   });
@@ -22,12 +23,17 @@ window.addEventListener("load", () => {
         if (data == true) {
           document.getElementById("nicknameSection").classList.toggle("hidden");
           document.getElementById("chatSection").classList.toggle("hidden");
+          document.body.setAttribute(
+            "data-nickname",
+            document.getElementById("u").value
+          );
+          document.getElementById("u").value = "";
         } else {
           document.getElementById("nicknameError").textContent =
             "That username is already taken";
+          document.getElementById("u").value = "";
         }
       });
-      document.getElementById("u").value = "";
     });
 });
 
@@ -49,8 +55,16 @@ function getTime() {
   return datetime;
 }
 
-//When receiving messages
-socket.on("chat message", function(data) {
+function appendMessage(msg) {
+  const nickname = document.body.dataset.nickname;
+  createMessage({
+    msg: msg,
+    nick: nickname,
+    ownMessage: true
+  });
+}
+
+function createMessage(data) {
   const node = document.createElement("li");
   const nameElement = document.createElement("p");
   const messageElement = document.createElement("blockquote");
@@ -58,13 +72,24 @@ socket.on("chat message", function(data) {
   const timeSpan = document.createElement("span");
   const messageText = document.createTextNode(data.msg);
   const nameText = document.createTextNode(data.nick);
+
   messageElement.appendChild(messageText);
   nameElement.appendChild(nameText);
   timeSpan.appendChild(currentTime);
   nameElement.appendChild(timeSpan);
   node.appendChild(nameElement);
   node.appendChild(messageElement);
+
+  if (data.ownMessage) {
+    node.className = "mine";
+  }
+
   document.getElementById("messages").append(node);
+}
+
+//When receiving messages
+socket.on("chat message", function(data) {
+  createMessage(data);
 });
 
 socket.on("userlist", function(data) {

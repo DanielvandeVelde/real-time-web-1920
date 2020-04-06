@@ -38,7 +38,7 @@ io.on("connection", function(socket) {
   });
 
   socket.on("chat message", function(data) {
-    io.emit("chat message", { msg: data, nick: socket.nickname });
+    socket.broadcast.emit("chat message", { msg: data, nick: socket.nickname });
   });
 });
 

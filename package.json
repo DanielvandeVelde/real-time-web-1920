@@ -1,0 +1,22 @@
+{
+  "name": "real-time-web-1920",
+  "version": "1.0.0",
+  "description": "A real time chat app with a twist!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DanielvandeVelde/real-time-web-1920.git"
+  },
+  "author": "Daniel van de Velde",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DanielvandeVelde/real-time-web-1920/issues"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0"
+  }
+}

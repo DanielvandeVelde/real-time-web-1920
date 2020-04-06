@@ -144,3 +144,20 @@ body {
   display: none;
   visibility: hidden;
 }
+
+@media only screen and (max-width: 720px) {
+  #nicknameSection form {
+    padding: 1em;
+  }
+
+  #chatSection button {
+    display: none;
+    visibility: collapse;
+  }
+
+  #chatSection form input {
+    padding: 10px;
+    width: 90%;
+    margin: 0 auto;
+  }
+}

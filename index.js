@@ -5,10 +5,10 @@ const io = require("socket.io")(http);
 
 const port = process.env.PORT || 1337;
 
-app.use(express.static("static"));
+app.use(express.static(__dirname + "/static"));
 
 app.get("/", function(req, res) {
-  res.render("index.html");
+  res.sendFile(__dirname + "/index.html");
 });
 
 io.on("connection", function(socket) {

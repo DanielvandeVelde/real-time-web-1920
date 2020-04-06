@@ -14,7 +14,12 @@ app.get("/", function(req, res) {
 
 io.on("connection", function(socket) {
   socket.on("new user", function(data, callback) {
-    if (nicknames.indexOf(data) != -1 || data == "" || data == undefined) {
+    if (
+      nicknames.indexOf(data) != -1 ||
+      data == "" ||
+      data == undefined ||
+      data.length > 16
+    ) {
       callback(false);
     } else {
       callback(true);

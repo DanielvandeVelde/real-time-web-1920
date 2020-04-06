@@ -11,7 +11,7 @@ window.addEventListener("load", () => {
     document.getElementById("m").value = "";
   });
 
-  //form listener for nickname
+  //Form listener for nickname
   document
     .getElementById("nicknameForm")
     .addEventListener("submit", function(e) {
@@ -37,6 +37,7 @@ window.addEventListener("load", () => {
     });
 });
 
+//Timestamps
 function getTime() {
   var currentdate = new Date();
   var datetime =
@@ -55,6 +56,7 @@ function getTime() {
   return datetime;
 }
 
+//Grab the name info without having to do a callback
 function appendMessage(msg) {
   const nickname = document.body.dataset.nickname;
   createMessage({
@@ -64,6 +66,7 @@ function appendMessage(msg) {
   });
 }
 
+//Creating and appending the message
 function createMessage(data) {
   const node = document.createElement("li");
   const nameElement = document.createElement("p");
@@ -92,6 +95,7 @@ socket.on("chat message", function(data) {
   createMessage(data);
 });
 
+//Creating the userlist
 socket.on("userlist", function(data) {
   const userlist = document.getElementById("userlist");
   userlist.textContent = "";

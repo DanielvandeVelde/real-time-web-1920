@@ -79,6 +79,7 @@ body {
   margin: 0 0.5%;
   padding: 9px;
 }
+
 #messages {
   list-style-type: none;
   margin: 0;
@@ -95,20 +96,20 @@ body {
   color: #b7c5d9;
   content: ">>";
   position: absolute;
-  left: 0;
+  left: 2px;
+  padding-bottom: 2px;
   margin: 0 2px;
   background-color: none;
 }
 
 #messages li {
-  padding: 5px 10px;
+  padding: 5px 8px;
   background-color: #d6daf0;
   border: 1px solid #b7c5d9;
   border-left: none;
   border-top: none;
-  padding: 2px;
-  margin: 2px;
-  margin-left: 20px;
+  margin: 2px 24px;
+  width: -moz-fit-content;
   width: fit-content;
 }
 

@@ -4,7 +4,9 @@ window.addEventListener("load", () => {
   //Form listener for when messages are send.
   document.getElementById("chatForm").addEventListener("submit", function(e) {
     e.preventDefault();
-    socket.emit("chat message", document.getElementById("m").value);
+    if (/\S/.test(document.getElementById("m").value)) {
+      socket.emit("chat message", document.getElementById("m").value);
+    }
     document.getElementById("m").value = "";
   });
 
@@ -67,10 +69,12 @@ socket.on("chat message", function(data) {
 
 socket.on("userlist", function(data) {
   const userlist = document.getElementById("userlist");
-  let rawHTML = "";
-  for (var i = 0; i < data.length; i++) {
-    rawHTML += "<li>" + data[i] + "</li>";
-  }
   userlist.textContent = "";
-  userlist.insertAdjacentHTML("beforeend", rawHTML);
+
+  for (var i = 0; i < data.length; i++) {
+    const li = document.createElement("li"),
+      text = document.createTextNode(data[i]);
+    li.appendChild(text);
+    userlist.appendChild(li);
+  }
 });

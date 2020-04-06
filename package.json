@@ -4,6 +4,7 @@
   "description": "A real time chat app with a twist!",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

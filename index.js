@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
+const nicknames = [];
 
 const port = process.env.PORT || 1337;
 
@@ -12,15 +13,27 @@ app.get("/", function(req, res) {
 });
 
 io.on("connection", function(socket) {
-  console.log("a user connected");
-
-  socket.on("disconnect", function() {
-    console.log("user disconnected");
+  socket.on("new user", function(data, callback) {
+    if (nicknames.indexOf(data) != -1 || data == "" || data == undefined) {
+      callback(false);
+    } else {
+      callback(true);
+      socket.nickname = data;
+      nicknames.push(socket.nickname);
+      io.emit("userlist", nicknames);
+    }
   });
 
-  socket.on("chat message", function(msg) {
-    io.emit("chat message", msg);
-    console.log("message: " + msg);
+  socket.on("disconnect", function() {
+    if (!socket.nickname) {
+      return;
+    }
+    nicknames.splice(nicknames.indexOf(socket.nickname), 1);
+    io.emit("userlist", nicknames);
+  });
+
+  socket.on("chat message", function(data) {
+    io.emit("chat message", { msg: data, nick: socket.nickname });
   });
 });
 

@@ -6,10 +6,23 @@
     <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body>
-    <ul id="messages"></ul>
-    <form id="form" action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
-    </form>
+    <section id="nicknameSection">
+      <form id="nicknameForm">
+        <label>
+          Enter your username:
+          <input id="u" />
+        </label>
+        <span id="nicknameError"></span>
+        <button>Send</button>
+      </form>
+    </section>
+    <section id="chatSection" class="hidden">
+      <ul id="messages"></ul>
+      <form id="chatForm" action="">
+        <input id="m" autocomplete="off" /><button>Send</button>
+      </form>
+      <ul id="userlist"></ul>
+    </section>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/script.js"></script>
   </body>

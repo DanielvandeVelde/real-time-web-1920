@@ -22,7 +22,7 @@ window.addEventListener("load", () => {
           document.getElementById("chatSection").classList.toggle("hidden");
         } else {
           document.getElementById("nicknameError").textContent =
-            "Username already taken.";
+            "That username is already taken";
         }
       });
       document.getElementById("u").value = "";

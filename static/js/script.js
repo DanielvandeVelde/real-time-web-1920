@@ -4,7 +4,10 @@ window.addEventListener("load", () => {
   //Form listener for when messages are send.
   document.getElementById("chatForm").addEventListener("submit", function(e) {
     e.preventDefault();
-    if (/\S/.test(document.getElementById("m").value)) {
+    if (
+      /\S/.test(document.getElementById("m").value) &&
+      document.getElementById("m").value.length < 2000
+    ) {
       socket.emit("chat message", document.getElementById("m").value);
       appendMessage(document.getElementById("m").value);
     }
@@ -114,14 +117,12 @@ socket.on("server message", function(data) {
 //Creating the userlist
 socket.on("userlist", function(data) {
   const details = document.getElementsByTagName("details")[0];
+  const summary = document.getElementsByTagName("summary")[0];
   const userlist = document.getElementById("userlist");
-  const summary = document.createElement("summary");
-  const actualSummaryText = data.length + " user(s) online";
-  summaryText = document.createTextNode(actualSummaryText);
+  const summaryText = data.length + " user(s) online";
   userlist.textContent = "";
 
-  summary.appendChild(summaryText);
-  details.appendChild(summary);
+  summary.textContent = summaryText;
 
   for (var i = 0; i < data.length; i++) {
     const li = document.createElement("li"),

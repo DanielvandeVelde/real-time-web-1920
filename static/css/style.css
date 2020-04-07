@@ -127,6 +127,7 @@ body {
   color: #117743;
   font-weight: bold;
   padding: 2px;
+  overflow: hidden;
 }
 
 #messages .you p span,
@@ -138,6 +139,7 @@ body {
 #messages .you blockquote,
 #messages .me blockquote {
   margin: 1em 4em;
+  overflow: hidden;
 }
 
 #messages .disconnect {
@@ -160,6 +162,10 @@ details {
 details ul {
   list-style-type: none;
   margin-top: 5px;
+}
+
+details li {
+  overflow: hidden;
 }
 
 .hidden {

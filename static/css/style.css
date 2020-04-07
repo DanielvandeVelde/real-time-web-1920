@@ -152,9 +152,14 @@ body {
   color: #34345c;
 }
 
-#userlist {
+details {
   position: fixed;
-  right: 100px;
+  right: 25px;
+}
+
+details ul {
+  list-style-type: none;
+  margin-top: 5px;
 }
 
 .hidden {

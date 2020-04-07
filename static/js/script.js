@@ -113,8 +113,15 @@ socket.on("server message", function(data) {
 
 //Creating the userlist
 socket.on("userlist", function(data) {
+  const details = document.getElementsByTagName("details")[0];
   const userlist = document.getElementById("userlist");
+  const summary = document.createElement("summary");
+  const actualSummaryText = data.length + " user(s) online";
+  summaryText = document.createTextNode(actualSummaryText);
   userlist.textContent = "";
+
+  summary.appendChild(summaryText);
+  details.appendChild(summary);
 
   for (var i = 0; i < data.length; i++) {
     const li = document.createElement("li"),

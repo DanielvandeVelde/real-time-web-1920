@@ -57,7 +57,16 @@ window.addEventListener("load", () => {
   });
 
   //Form listeners for the video
-  document.getElementById;
+  const playPauseButton = document.getElementById("playPause");
+  playPauseButton.addEventListener("click", function(e) {
+    e.preventDefault();
+    socket.emit("playpause");
+  });
+  const muteButton = document.getElementById("mute");
+  muteButton.addEventListener("click", function(e) {
+    e.preventDefault();
+    muteOrUnmute();
+  });
 });
 
 //When yt_iframe_api does its thing
@@ -177,4 +186,14 @@ function createUserlist(data) {
 function createVideo(data) {
   player.cueVideoById(data);
   player.playVideo();
+}
+
+function muteOrUnmute() {
+  if (player.isMuted()) {
+    document.getElementById("mute").textContent = "Mute";
+    player.unMute();
+  } else {
+    document.getElementById("mute").textContent = "Unmute";
+    player.mute();
+  }
 }

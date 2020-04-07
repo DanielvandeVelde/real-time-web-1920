@@ -12,7 +12,7 @@
       <form id="nicknameForm">
         <label>
           Enter your username:
-          <input id="u" maxlength="16" />
+          <input id="u" required autocomplete="off" maxlength="16" />
         </label>
         <span id="nicknameError"></span>
         <button>Send</button>
@@ -21,7 +21,9 @@
     <section id="chatSection" class="hidden">
       <ul id="messages"></ul>
       <form id="chatForm" action="">
-        <input id="m" autocomplete="off" /><button>Send</button>
+        <input id="m" required autocomplete="off" maxlength="2000" /><button>
+          Send
+        </button>
       </form>
       <aside>
         <div id="video-placeholder"></div>

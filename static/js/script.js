@@ -41,7 +41,7 @@ window.addEventListener("load", () => {
         data
       ) {
         if (data == true) {
-          document.getElementById("nicknameSection").classList.toggle("hidden");
+          document.body.removeChild(document.getElementById("nicknameSection"));
           document.getElementById("chatSection").classList.toggle("hidden");
           document.body.setAttribute(
             "data-nickname",
@@ -50,7 +50,7 @@ window.addEventListener("load", () => {
           document.getElementById("u").value = "";
         } else {
           document.getElementById("nicknameError").textContent =
-            "That username is already taken";
+            "That username is unavailable";
           document.getElementById("u").value = "";
         }
       });

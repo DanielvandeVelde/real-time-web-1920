@@ -37,7 +37,9 @@ io.on("connection", function(socket) {
     const re = /https?:\/\/(?:[0-9A-Z-]+\.)?(?:youtu\.be\/|youtube(?:-nocookie)?\.com\S*?[^\w\s-])([\w-]{11})(?=[^\w-]|$)(?![?=&+%\w.-]*(?:['"][^<>]*>|<\/a>))[?=&+%\w.-]*/gi;
     const url = messageValue.substr(messageValue.indexOf(" ") + 1);
     const videoID = url.replace(re, `$1`);
-    io.emit("new video", videoID);
+    if (videoID) {
+      io.emit("new video", videoID);
+    }
   });
 
   socket.on("disconnect", function() {
@@ -53,7 +55,12 @@ io.on("connection", function(socket) {
   });
 
   socket.on("chat message", function(data) {
-    socket.broadcast.emit("chat message", { msg: data, nick: socket.nickname });
+    if (/\S/.test(data) && data.length < 2000) {
+      socket.broadcast.emit("chat message", {
+        msg: data,
+        nick: socket.nickname
+      });
+    }
   });
 });
 

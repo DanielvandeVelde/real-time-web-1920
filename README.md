@@ -15,10 +15,13 @@ Play will also accept just the ID, youtu.be, and many more.
 
 - [x] Playing the same video to all connected users
 - [x] Pause/Play
-- [ ] Scrubbing/moving to certain time
+- [x] Scrubbing/moving to certain time (locally)
+- [ ] Move video progress between all users
 - [x] Local mute button
 - [ ] Playing the exact video at the exact moment even when joining late
 - [x] Better regex for YouTube urls/ids
+- [ ] Volume slider?
+- [ ] Actual controls styling?
 - [ ] Mobile styling
 
 ## Helpful links

@@ -57,13 +57,11 @@ window.addEventListener("load", () => {
   });
 
   //Form listeners for the video
-  const playPauseButton = document.getElementById("playPause");
-  playPauseButton.addEventListener("click", function(e) {
+  document.getElementById("playPause").addEventListener("click", function(e) {
     e.preventDefault();
     socket.emit("playpause");
   });
-  const muteButton = document.getElementById("mute");
-  muteButton.addEventListener("click", function(e) {
+  document.getElementById("mute").addEventListener("click", function(e) {
     e.preventDefault();
     muteOrUnmute();
   });
@@ -98,6 +96,17 @@ socket.on("server message", function(data) {
 
 socket.on("userlist", function(data) {
   createUserlist(data);
+});
+
+socket.on("playpause", function(playing) {
+  const playPauseButton = document.getElementById("playPause");
+  if (playing) {
+    player.playVideo();
+    playPauseButton.textContent = "Pause";
+  } else {
+    player.pauseVideo();
+    playPauseButton.textContent = "Play";
+  }
 });
 
 //Server message

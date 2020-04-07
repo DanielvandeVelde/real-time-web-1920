@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
+let playing = false;
 const nicknames = [];
 
 const port = process.env.PORT || 1337;
@@ -40,6 +41,7 @@ io.on("connection", function(socket) {
     if (videoID) {
       io.emit("new video", videoID);
     }
+    playing = true;
   });
 
   socket.on("disconnect", function() {
@@ -61,6 +63,15 @@ io.on("connection", function(socket) {
         nick: socket.nickname
       });
     }
+  });
+
+  socket.on("playpause", function() {
+    if (playing == false) {
+      playing = true;
+    } else {
+      playing = false;
+    }
+    io.emit("playpause", playing);
   });
 });
 

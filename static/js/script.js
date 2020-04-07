@@ -2,6 +2,31 @@ const socket = io();
 let player;
 
 window.addEventListener("load", () => {
+  //Form listener for nickname
+  document
+    .getElementById("nicknameForm")
+    .addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      socket.emit("new user", document.getElementById("u").value, function(
+        data
+      ) {
+        if (data == true) {
+          document.body.removeChild(document.getElementById("nicknameSection"));
+          document.getElementById("chatSection").classList.toggle("hidden");
+          document.body.setAttribute(
+            "data-nickname",
+            document.getElementById("u").value
+          );
+          document.getElementById("u").value = "";
+        } else {
+          document.getElementById("nicknameError").textContent =
+            "That username is unavailable";
+          document.getElementById("u").value = "";
+        }
+      });
+    });
+
   //Form listener for when messages are send.
   document.getElementById("chatForm").addEventListener("submit", function(e) {
     e.preventDefault();
@@ -30,33 +55,9 @@ window.addEventListener("load", () => {
     }
     document.getElementById("m").value = "";
   });
-
-  //Form listener for nickname
-  document
-    .getElementById("nicknameForm")
-    .addEventListener("submit", function(e) {
-      e.preventDefault();
-
-      socket.emit("new user", document.getElementById("u").value, function(
-        data
-      ) {
-        if (data == true) {
-          document.body.removeChild(document.getElementById("nicknameSection"));
-          document.getElementById("chatSection").classList.toggle("hidden");
-          document.body.setAttribute(
-            "data-nickname",
-            document.getElementById("u").value
-          );
-          document.getElementById("u").value = "";
-        } else {
-          document.getElementById("nicknameError").textContent =
-            "That username is unavailable";
-          document.getElementById("u").value = "";
-        }
-      });
-    });
 });
 
+//When yt_iframe_api does its thing
 function onYouTubeIframeAPIReady() {
   player = new YT.Player("video-placeholder", {
     width: 600,
@@ -70,23 +71,31 @@ function onYouTubeIframeAPIReady() {
   });
 }
 
-//Timestamps
-function getTime() {
-  var currentdate = new Date();
-  var datetime =
-    String(currentdate.getDate()).padStart(2, "0") +
-    "/" +
-    String(currentdate.getMonth() + 1).padStart(2, "0") +
-    "/" +
-    currentdate.getFullYear() +
-    " " +
-    String(currentdate.getHours()).padStart(2, "0") +
-    ":" +
-    String(currentdate.getMinutes()).padStart(2, "0") +
-    ":" +
-    String(currentdate.getSeconds()).padStart(2, "0");
+//Socket :-)
+socket.on("chat message", function(data) {
+  createChatMessage(data);
+});
 
-  return datetime;
+socket.on("new video", function(data) {
+  createVideo(data);
+});
+
+socket.on("server message", function(data) {
+  createServerMessage(data);
+});
+
+socket.on("userlist", function(data) {
+  createUserlist(data);
+});
+
+//Server message
+function createServerMessage(data) {
+  const node = document.createElement("li");
+  const message = document.createTextNode(data.msg);
+  node.className = data.type;
+
+  node.appendChild(message);
+  document.getElementById("messages").append(node);
 }
 
 //Grab the name info without having to do a callback
@@ -125,36 +134,26 @@ function createChatMessage(data) {
   document.getElementById("messages").append(node);
 }
 
-//Server message
-function createServerMessage(data) {
-  const node = document.createElement("li");
-  const message = document.createTextNode(data.msg);
-  node.className = data.type;
+//Timestamps to get local time and date
+function getTime() {
+  var currentdate = new Date();
+  var datetime =
+    String(currentdate.getDate()).padStart(2, "0") +
+    "/" +
+    String(currentdate.getMonth() + 1).padStart(2, "0") +
+    "/" +
+    currentdate.getFullYear() +
+    " " +
+    String(currentdate.getHours()).padStart(2, "0") +
+    ":" +
+    String(currentdate.getMinutes()).padStart(2, "0") +
+    ":" +
+    String(currentdate.getSeconds()).padStart(2, "0");
 
-  node.appendChild(message);
-  document.getElementById("messages").append(node);
+  return datetime;
 }
 
-function createVideo(data) {
-  player.cueVideoById(data);
-  player.playVideo();
-}
-
-//When receiving messages
-socket.on("chat message", function(data) {
-  createChatMessage(data);
-});
-
-socket.on("new video", function(data) {
-  createVideo(data);
-});
-
-socket.on("server message", function(data) {
-  createServerMessage(data);
-});
-
-//Creating the userlist
-socket.on("userlist", function(data) {
+function createUserlist(data) {
   const details = document.getElementsByTagName("details")[0];
   const summary = document.getElementsByTagName("summary")[0];
   const userlist = document.getElementById("userlist");
@@ -169,4 +168,10 @@ socket.on("userlist", function(data) {
     li.appendChild(text);
     userlist.appendChild(li);
   }
-});
+}
+
+//For when a new video comes in
+function createVideo(data) {
+  player.cueVideoById(data);
+  player.playVideo();
+}

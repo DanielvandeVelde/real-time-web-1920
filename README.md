@@ -11,4 +11,8 @@ Learning and doing the basics of Socket.io for now.
 - [ ] Scrubbing/moving to certain time
 - [ ] Local mute button
 - [ ] Playing the exact video at the exact moment even when joining late
-- [ ] Better Regex for YouTube urls/ids
+- [x] Better Regex for YouTube urls/ids
+
+## Helpful links
+
+- [Great YouTube RegEx on StackOverflow](https://stackoverflow.com/questions/5830387/how-do-i-find-all-youtube-video-ids-in-a-string-using-a-regex/6901180#6901180)

@@ -27,6 +27,7 @@ io.on("connection", function(socket) {
       socket.nickname = data;
       nicknames.push(socket.nickname);
       io.emit("userlist", nicknames);
+      io.emit("playpause", playing);
       io.emit("server message", {
         msg: `${socket.nickname} connected`,
         type: "connect"

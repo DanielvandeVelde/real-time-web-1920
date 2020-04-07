@@ -14,9 +14,9 @@ Play will also accept just the ID, youtu.be, and many more.
 ## TODO/Wishlist
 
 - [x] Playing the same video to all connected users
-- [ ] Pause/Play
+- [x] Pause/Play
 - [ ] Scrubbing/moving to certain time
-- [ ] Local mute button
+- [x] Local mute button
 - [ ] Playing the exact video at the exact moment even when joining late
 - [x] Better regex for YouTube urls/ids
 - [ ] Mobile styling

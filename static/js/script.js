@@ -27,6 +27,15 @@ window.addEventListener("load", () => {
       });
     });
 
+  //Append YT api
+  function appendYTiframeAPI() {
+    const tag = document.createElement("script");
+    tag.src = "/js/yt_iframe_api.js";
+    const firstScriptTag = document.getElementsByTagName("script")[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  }
+  appendYTiframeAPI();
+
   //Form listener for when messages are send.
   document.getElementById("chatForm").addEventListener("submit", function(e) {
     e.preventDefault();

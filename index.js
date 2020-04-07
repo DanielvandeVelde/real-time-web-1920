@@ -27,7 +27,7 @@ io.on("connection", function(socket) {
       nicknames.push(socket.nickname);
       io.emit("userlist", nicknames);
       io.emit("server message", {
-        msg: `${socket.nickname} connected.`,
+        msg: `${socket.nickname} connected`,
         type: "connect"
       });
     }

@@ -55,6 +55,9 @@ window.addEventListener("load", () => {
     }
     document.getElementById("m").value = "";
   });
+
+  //Form listeners for the video
+  document.getElementById;
 });
 
 //When yt_iframe_api does its thing

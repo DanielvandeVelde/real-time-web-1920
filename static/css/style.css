@@ -159,6 +159,8 @@ body {
 details {
   position: fixed;
   right: 25px;
+  background-color: #d6daf0;
+  border: 1px solid #b7c5d9;
 }
 
 details ul {

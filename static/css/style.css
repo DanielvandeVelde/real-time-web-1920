@@ -147,11 +147,13 @@ body {
   font-size: 1em;
   font-weight: bold;
   color: red;
+  overflow: hidden;
 }
 
 #messages .connect {
   padding: 0.5em;
   color: #34345c;
+  overflow: hidden;
 }
 
 details {

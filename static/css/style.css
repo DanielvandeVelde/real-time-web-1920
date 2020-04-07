@@ -179,6 +179,15 @@ details li {
   visibility: hidden;
 }
 
+aside div {
+  display: flex;
+  flex-direction: row;
+}
+
+aside input[type="range"] {
+  width: 100%;
+}
+
 @media only screen and (max-width: 720px) {
   #nicknameSection form {
     padding: 1em;

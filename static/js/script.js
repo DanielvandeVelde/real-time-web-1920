@@ -27,7 +27,7 @@ window.addEventListener("load", () => {
       });
     });
 
-  //Append YT api
+  //Start YT api wizardry
   function appendYTiframeAPI() {
     const tag = document.createElement("script");
     tag.src = "/js/yt_iframe_api.js";
@@ -35,6 +35,13 @@ window.addEventListener("load", () => {
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
   }
   appendYTiframeAPI();
+
+  document.getElementById("progress").addEventListener("input", function(e) {
+    e.preventDefault();
+    var newTime = player.getDuration() * (e.target.value / 100);
+    // Skip video to new time.
+    player.seekTo(newTime);
+  });
 
   //Form listener for when messages are send.
   document.getElementById("chatForm").addEventListener("submit", function(e) {
@@ -86,8 +93,59 @@ function onYouTubeIframeAPIReady() {
       color: "white",
       controls: 0,
       disablekb: 1
+    },
+    events: {
+      onReady: timeUpdates
     }
   });
+}
+
+function timeUpdates() {
+  updateTimerDisplay();
+  updateProgressBar();
+  let time_update_interval;
+
+  if (time_update_interval) {
+    clearInterval(time_update_interval);
+  }
+
+  time_update_interval = setInterval(function() {
+    updateTimerDisplay();
+    updateProgressBar();
+  }, 1000);
+}
+
+function formatTime(time) {
+  time = Math.round(time);
+  const minutes = Math.floor(time / 60),
+    seconds = time - minutes * 60;
+  seconds = seconds < 10 ? "0" + seconds : seconds;
+  return minutes + ":" + seconds;
+}
+
+function updateTimerDisplay() {
+  document.getElementById("current").textContent = formatTime(
+    player.getCurrentTime()
+  );
+  document.getElementById("duration").textContent = formatTime(
+    player.getDuration()
+  );
+}
+
+function updateProgressBar() {
+  document.getElementById("progress").value =
+    (player.getCurrentTime() / player.getDuration()) * 100;
+}
+
+function formatTime(time) {
+  time = Math.round(time);
+
+  var minutes = Math.floor(time / 60),
+    seconds = time - minutes * 60;
+
+  seconds = seconds < 10 ? "0" + seconds : seconds;
+
+  return minutes + ":" + seconds;
 }
 
 //Socket :-)

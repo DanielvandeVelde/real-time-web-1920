@@ -19,12 +19,8 @@ window.addEventListener("load", () => {
         messageValue.startsWith("!play") ||
         messageValue.startsWith("/play")
       ) {
-        const re = /https?:\/\/(?:[0-9A-Z-]+\.)?(?:youtu\.be\/|youtube(?:-nocookie)?\.com\S*?[^\w\s-])([\w-]{11})(?=[^\w-]|$)(?![?=&+%\w.-]*(?:['"][^<>]*>|<\/a>))[?=&+%\w.-]*/gi;
-        const url = messageValue.substr(messageValue.indexOf(" ") + 1);
-        const videoID = url.replace(re, `$1`);
-        console.log(videoID);
         document.getElementById("m").value = "";
-        socket.emit("new video", videoID);
+        socket.emit("new video", messageValue);
         return;
       }
       socket.emit("chat message", messageValue);

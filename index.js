@@ -33,8 +33,11 @@ io.on("connection", function(socket) {
     }
   });
 
-  socket.on("new video", function(data) {
-    io.emit("new video", data);
+  socket.on("new video", function(messageValue) {
+    const re = /https?:\/\/(?:[0-9A-Z-]+\.)?(?:youtu\.be\/|youtube(?:-nocookie)?\.com\S*?[^\w\s-])([\w-]{11})(?=[^\w-]|$)(?![?=&+%\w.-]*(?:['"][^<>]*>|<\/a>))[?=&+%\w.-]*/gi;
+    const url = messageValue.substr(messageValue.indexOf(" ") + 1);
+    const videoID = url.replace(re, `$1`);
+    io.emit("new video", videoID);
   });
 
   socket.on("disconnect", function() {

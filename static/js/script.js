@@ -1,16 +1,31 @@
 const socket = io();
-var player;
+let player;
 
 window.addEventListener("load", () => {
   //Form listener for when messages are send.
   document.getElementById("chatForm").addEventListener("submit", function(e) {
     e.preventDefault();
-    if (
-      /\S/.test(document.getElementById("m").value) &&
-      document.getElementById("m").value.length < 2000
-    ) {
-      socket.emit("chat message", document.getElementById("m").value);
-      appendMessage(document.getElementById("m").value);
+    let messageValue = document.getElementById("m").value;
+    if (/\S/.test(messageValue) && messageValue.length < 2000) {
+      if (
+        messageValue.startsWith("/help") ||
+        messageValue.startsWith("!help")
+      ) {
+        appendMessage(messageValue + " won't save you here");
+        document.getElementById("m").value = "";
+        return;
+      }
+      if (
+        messageValue.startsWith("!play") ||
+        messageValue.startsWith("/play")
+      ) {
+        videoID = messageValue.substr(messageValue.indexOf(" ") + 1);
+        document.getElementById("m").value = "";
+        socket.emit("new video", videoID);
+        return;
+      }
+      socket.emit("chat message", messageValue);
+      appendMessage(messageValue);
     }
     document.getElementById("m").value = "";
   });
@@ -31,7 +46,6 @@ window.addEventListener("load", () => {
             "data-nickname",
             document.getElementById("u").value
           );
-          onYouTubeIframeAPIReady();
           document.getElementById("u").value = "";
         } else {
           document.getElementById("nicknameError").textContent =
@@ -47,19 +61,12 @@ function onYouTubeIframeAPIReady() {
     width: 600,
     height: 400,
     videoId: "hcdnFA0t0kk",
-    events: {
-      onReady: initialize
-    },
     playerVars: {
       color: "white",
       controls: 0,
       disablekb: 1
     }
   });
-}
-
-function initialize() {
-  //check where we currently at?
 }
 
 //Timestamps
@@ -127,9 +134,18 @@ function createServerMessage(data) {
   document.getElementById("messages").append(node);
 }
 
+function createVideo(data) {
+  player.cueVideoById(data);
+  player.playVideo();
+}
+
 //When receiving messages
 socket.on("chat message", function(data) {
   createChatMessage(data);
+});
+
+socket.on("new video", function(data) {
+  createVideo(data);
 });
 
 socket.on("server message", function(data) {

@@ -33,6 +33,10 @@ io.on("connection", function(socket) {
     }
   });
 
+  socket.on("new video", function(data) {
+    io.emit("new video", data);
+  });
+
   socket.on("disconnect", function() {
     if (!socket.nickname) {
       return;

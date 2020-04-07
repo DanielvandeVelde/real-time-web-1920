@@ -11,7 +11,9 @@ window.addEventListener("load", () => {
         messageValue.startsWith("/help") ||
         messageValue.startsWith("!help")
       ) {
-        appendMessage(messageValue + " won't save you here");
+        appendMessage(
+          "For help go here: https://github.com/DanielvandeVelde/real-time-web-1920#commands"
+        );
         document.getElementById("m").value = "";
         return;
       }

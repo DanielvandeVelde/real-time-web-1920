@@ -4,6 +4,13 @@ Learning and doing the basics of Socket.io for now.
 
 [Demo running here](https://socket-1920.herokuapp.com/)
 
+## Commands
+
+`!help` or `/help` will redirect you here.
+`/play dQw4w9WgXcQ` or `!play https://www.youtube.com/watch?v=dQw4w9WgXcQ` Will play the video.
+
+Play will also accept just the ID, youtu.be, and many more.
+
 ## TODO/Wishlist
 
 - [x] Playing the same video to all connected users
@@ -11,7 +18,7 @@ Learning and doing the basics of Socket.io for now.
 - [ ] Scrubbing/moving to certain time
 - [ ] Local mute button
 - [ ] Playing the exact video at the exact moment even when joining late
-- [x] Better Regex for YouTube urls/ids
+- [x] Better regex for YouTube urls/ids
 
 ## Helpful links
 

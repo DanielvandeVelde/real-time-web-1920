@@ -92,7 +92,8 @@ body {
   overflow: hidden;
 }
 
-#messages li::before {
+#messages .you::before,
+#messages .me::before {
   color: #b7c5d9;
   content: ">>";
   position: absolute;
@@ -102,7 +103,8 @@ body {
   background-color: none;
 }
 
-#messages li {
+#messages .you,
+#messages .me {
   padding: 5px 8px;
   background-color: #d6daf0;
   border: 1px solid #b7c5d9;
@@ -113,26 +115,34 @@ body {
   width: fit-content;
 }
 
-#messages .mine {
+#chatSection #messages .me {
   background: #d6bad0;
   border: 1px solid #ba9dbf;
   border-left: none;
   border-top: none;
 }
 
-#messages li p {
+#messages .you p,
+#messages .me p {
   color: #117743;
   font-weight: bold;
   padding: 2px;
 }
 
-#messages li p span {
+#messages .you p span,
+#messages .me p span {
   margin-left: 5px;
   font-weight: normal;
 }
 
-#messages li blockquote {
+#messages .you blockquote,
+#messages .me blockquote {
   margin: 1em 4em;
+}
+
+#messages .server {
+  margin: 1em 0.5em;
+  color: #34345c;
 }
 
 #userlist {

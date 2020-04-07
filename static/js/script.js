@@ -59,7 +59,7 @@ function getTime() {
 //Grab the name info without having to do a callback
 function appendMessage(msg) {
   const nickname = document.body.dataset.nickname;
-  createMessage({
+  createChatMessage({
     msg: msg,
     nick: nickname,
     ownMessage: true
@@ -67,7 +67,7 @@ function appendMessage(msg) {
 }
 
 //Creating and appending the message
-function createMessage(data) {
+function createChatMessage(data) {
   const node = document.createElement("li");
   const nameElement = document.createElement("p");
   const messageElement = document.createElement("blockquote");
@@ -84,15 +84,31 @@ function createMessage(data) {
   node.appendChild(messageElement);
 
   if (data.ownMessage) {
-    node.className = "mine";
+    node.className = "me";
+  } else {
+    node.className = "you";
   }
 
   document.getElementById("messages").append(node);
 }
 
+//Server message
+function createServerMessage(msg) {
+  const node = document.createElement("li");
+  const message = document.createTextNode(msg);
+  node.className = "server";
+
+  node.appendChild(message);
+  document.getElementById("messages").append(node);
+}
+
 //When receiving messages
 socket.on("chat message", function(data) {
-  createMessage(data);
+  createChatMessage(data);
+});
+
+socket.on("server message", function(msg) {
+  createServerMessage(msg);
 });
 
 //Creating the userlist

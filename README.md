@@ -19,6 +19,7 @@ Play will also accept just the ID, youtu.be, and many more.
 - [ ] Local mute button
 - [ ] Playing the exact video at the exact moment even when joining late
 - [x] Better regex for YouTube urls/ids
+- [ ] Mobile styling
 
 ## Helpful links
 

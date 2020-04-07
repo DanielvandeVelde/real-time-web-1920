@@ -156,11 +156,12 @@ body {
   overflow: hidden;
 }
 
-details {
+aside {
   position: fixed;
   right: 25px;
-  background-color: #d6daf0;
-  border: 1px solid #b7c5d9;
+  background-color: #eef2ff;
+  border: 1px solid #d6daf0;
+  padding: 2px;
 }
 
 details ul {
@@ -169,6 +170,7 @@ details ul {
 }
 
 details li {
+  padding: 2px;
   overflow: hidden;
 }
 

@@ -1,4 +1,5 @@
 const socket = io();
+var player;
 
 window.addEventListener("load", () => {
   //Form listener for when messages are send.
@@ -30,6 +31,7 @@ window.addEventListener("load", () => {
             "data-nickname",
             document.getElementById("u").value
           );
+          onYouTubeIframeAPIReady();
           document.getElementById("u").value = "";
         } else {
           document.getElementById("nicknameError").textContent =
@@ -39,6 +41,26 @@ window.addEventListener("load", () => {
       });
     });
 });
+
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player("video-placeholder", {
+    width: 600,
+    height: 400,
+    videoId: "hcdnFA0t0kk",
+    events: {
+      onReady: initialize
+    },
+    playerVars: {
+      color: "white",
+      controls: 0,
+      disablekb: 1
+    }
+  });
+}
+
+function initialize() {
+  //check where we currently at?
+}
 
 //Timestamps
 function getTime() {

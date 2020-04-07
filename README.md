@@ -6,8 +6,8 @@ Learning and doing the basics of Socket.io for now.
 
 ## Commands
 
-`!help` or `/help` will redirect you here.
-`/play dQw4w9WgXcQ` or `!play https://www.youtube.com/watch?v=dQw4w9WgXcQ` Will play the video.
+`!help` or `/help` will redirect you here.  
+`!play dQw4w9WgXcQ` or `/play https://www.youtube.com/watch?v=dQw4w9WgXcQ` will play the video.
 
 Play will also accept just the ID, youtu.be, and many more.
 

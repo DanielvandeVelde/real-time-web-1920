@@ -12,13 +12,13 @@ window.addEventListener("load", () => {
         data
       ) {
         if (data == true) {
-          document.body.removeChild(document.getElementById("nicknameSection"));
           document.getElementById("chatSection").classList.toggle("hidden");
           document.body.setAttribute(
             "data-nickname",
             document.getElementById("u").value
           );
           document.getElementById("u").value = "";
+          document.body.removeChild(document.getElementById("nicknameSection"));
         } else {
           document.getElementById("nicknameError").textContent =
             "That username is unavailable";

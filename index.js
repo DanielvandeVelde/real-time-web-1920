@@ -26,7 +26,10 @@ io.on("connection", function(socket) {
       socket.nickname = data;
       nicknames.push(socket.nickname);
       io.emit("userlist", nicknames);
-      io.emit("server message", `${socket.nickname} connected.`);
+      io.emit("server message", {
+        msg: `${socket.nickname} connected.`,
+        type: "connect"
+      });
     }
   });
 
@@ -36,7 +39,10 @@ io.on("connection", function(socket) {
     }
     nicknames.splice(nicknames.indexOf(socket.nickname), 1);
     io.emit("userlist", nicknames);
-    io.emit("server message", `${socket.nickname} disconnected.`);
+    io.emit("server message", {
+      msg: `(${socket.nickname} was banned)`,
+      type: "disconnect"
+    });
   });
 
   socket.on("chat message", function(data) {

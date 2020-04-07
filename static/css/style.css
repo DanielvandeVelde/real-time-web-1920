@@ -140,8 +140,15 @@ body {
   margin: 1em 4em;
 }
 
-#messages .server {
-  margin: 1em 0.5em;
+#messages .disconnect {
+  padding: 0.5em;
+  font-size: 1em;
+  font-weight: bold;
+  color: red;
+}
+
+#messages .connect {
+  padding: 0.5em;
   color: #34345c;
 }
 

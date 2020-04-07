@@ -93,10 +93,10 @@ function createChatMessage(data) {
 }
 
 //Server message
-function createServerMessage(msg) {
+function createServerMessage(data) {
   const node = document.createElement("li");
-  const message = document.createTextNode(msg);
-  node.className = "server";
+  const message = document.createTextNode(data.msg);
+  node.className = data.type;
 
   node.appendChild(message);
   document.getElementById("messages").append(node);
@@ -107,8 +107,8 @@ socket.on("chat message", function(data) {
   createChatMessage(data);
 });
 
-socket.on("server message", function(msg) {
-  createServerMessage(msg);
+socket.on("server message", function(data) {
+  createServerMessage(data);
 });
 
 //Creating the userlist

@@ -35,6 +35,9 @@ body {
   border: 1px solid #b7c5d9;
   border-left: none;
   border-top: none;
+  opacity: 0;
+  visibility: hidden;
+  animation: fadeIn 2s linear 2s forwards;
 }
 
 #nicknameSection form label {
@@ -191,6 +194,17 @@ aside div {
 
 aside input[type="range"] {
   width: 100%;
+}
+
+@keyframes fadeIn {
+  from {
+    visibility: visible;
+    opacity: 0;
+  }
+  to {
+    visibility: visible;
+    opacity: 1;
+  }
 }
 
 @media only screen and (max-width: 720px) {

@@ -86,8 +86,6 @@ When adding the script to them DOM with Javascript it initializes the YouTube if
 It also calls some events when the player is ready and loaded or when the state of the player changes.  
 I'm don't believe I'm using it to its full potential yet, but just using their player variable helps a lot.
 
-The different aspects of the YouTube iframe API I use:
-
 ## TODO/Wishlist
 
 - [x] Playing the same video to all connected users

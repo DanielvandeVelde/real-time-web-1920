@@ -95,7 +95,8 @@ function onYouTubeIframeAPIReady() {
       disablekb: 1
     },
     events: {
-      onReady: timeUpdates
+      onReady: timeUpdates,
+      onStateChange: onStateChange
     }
   });
 }
@@ -117,8 +118,8 @@ function timeUpdates() {
 
 function formatTime(time) {
   time = Math.round(time);
-  const minutes = Math.floor(time / 60),
-    seconds = time - minutes * 60;
+  const minutes = Math.floor(time / 60);
+  let seconds = time - minutes * 60;
   seconds = seconds < 10 ? "0" + seconds : seconds;
   return minutes + ":" + seconds;
 }
@@ -137,15 +138,13 @@ function updateProgressBar() {
     (player.getCurrentTime() / player.getDuration()) * 100;
 }
 
-function formatTime(time) {
-  time = Math.round(time);
-
-  var minutes = Math.floor(time / 60),
-    seconds = time - minutes * 60;
-
-  seconds = seconds < 10 ? "0" + seconds : seconds;
-
-  return minutes + ":" + seconds;
+function onStateChange(event) {
+  if (event.data == 1) {
+    console.log("playing");
+  }
+  if (event.data == 2) {
+    console.log("paused");
+  }
 }
 
 //Socket :-)

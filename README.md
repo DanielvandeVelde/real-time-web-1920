@@ -27,3 +27,4 @@ Play will also accept just the ID, youtu.be, and many more.
 ## Helpful links
 
 - [Great YouTube RegEx on StackOverflow](https://stackoverflow.com/questions/5830387/how-do-i-find-all-youtube-video-ids-in-a-string-using-a-regex/6901180#6901180)
+- [YouTube iframe API](https://developers.google.com/youtube/iframe_api_reference)

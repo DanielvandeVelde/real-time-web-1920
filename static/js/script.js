@@ -39,8 +39,7 @@ window.addEventListener("load", () => {
   document.getElementById("progress").addEventListener("input", function(e) {
     e.preventDefault();
     var newTime = player.getDuration() * (e.target.value / 100);
-    // Skip video to new time.
-    player.seekTo(newTime);
+    socket.emit("video to", newTime);
   });
 
   //Form listener for when messages are send.
@@ -156,6 +155,10 @@ socket.on("new video", function(data) {
   createVideo(data);
 });
 
+socket.on("video to", function(data) {
+  setNewTime(data);
+});
+
 socket.on("server message", function(data) {
   createServerMessage(data);
 });
@@ -174,6 +177,10 @@ socket.on("playpause", function(playing) {
     playPauseButton.textContent = "Play";
   }
 });
+
+function setNewTime(newTime) {
+  player.seekTo(newTime);
+}
 
 //Server message
 function createServerMessage(data) {

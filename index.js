@@ -66,6 +66,10 @@ io.on("connection", function(socket) {
     }
   });
 
+  socket.on("video to", function(data) {
+    io.emit("video to", data);
+  });
+
   socket.on("playpause", function() {
     if (playing == false) {
       playing = true;

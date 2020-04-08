@@ -41,8 +41,8 @@ io.on("connection", function(socket) {
     const videoID = url.replace(re, `$1`);
     if (videoID) {
       io.emit("new video", videoID);
+      playing = true;
     }
-    playing = true;
   });
 
   socket.on("disconnect", function() {
@@ -58,7 +58,7 @@ io.on("connection", function(socket) {
   });
 
   socket.on("chat message", function(data) {
-    if (/\S/.test(data) && data.length < 2000) {
+    if (/\S/.test(data) && data.length < 2000 && socket.nickname) {
       socket.broadcast.emit("chat message", {
         msg: data,
         nick: socket.nickname

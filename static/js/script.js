@@ -167,6 +167,10 @@ socket.on("userlist", function(data) {
   createUserlist(data);
 });
 
+function setNewTime(newTime) {
+  player.seekTo(newTime);
+}
+
 socket.on("playpause", function(playing) {
   const playPauseButton = document.getElementById("playPause");
   if (playing) {
@@ -177,10 +181,6 @@ socket.on("playpause", function(playing) {
     playPauseButton.textContent = "Play";
   }
 });
-
-function setNewTime(newTime) {
-  player.seekTo(newTime);
-}
 
 //Server message
 function createServerMessage(data) {

@@ -91,9 +91,9 @@ I'm don't believe I'm using it to its full potential yet, but just using their p
 - [x] Playing the same video to all connected users
 - [x] Pause/Play
 - [x] Scrubbing/moving to certain time (locally)
-- [ ] Move video progress between all users
+- [x] Move video progress between all users
 - [x] Local mute button
-- [ ] Prettier clientsided server messages :-)
+- [ ] Move all messages client-side, sort them out there
 - [ ] Playing the exact video at the exact moment even when joining late
 - [x] Better regex for YouTube urls/ids
 - [ ] Actual controls styling?

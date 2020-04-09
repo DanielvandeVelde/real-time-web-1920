@@ -90,16 +90,26 @@ I'm don't believe I'm using it to its full potential yet, but just using their p
 
 - [x] Playing the same video to all connected users
 - [x] Pause/Play
-- [x] Scrubbing/moving to certain time (locally)
+- [x] Scrubbing/moving to certain time
 - [x] Move video progress between all users
 - [x] Local mute button
-- [ ] Move all messages client-side, sort them out there
 - [ ] Playing the exact video at the exact moment even when joining late
 - [x] Better regex for YouTube urls/ids
 - [ ] Actual controls styling?
 - [ ] Mobile styling
 
-Not sure about adding a volume slider
+thoughts/questions:  
+Send all messages to server and sort them there? (no client-side validation)  
+Add a volume slider?
+
+<!--
+Message comes in
+Check what kind of message it is
+ - Server message -> send message with class 'sever'
+ - Normal message -> Send to everyone with class 'you', send to users with class 'me'
+ - Play message -> Show as server message? Run function play
+ - Help message -> Only send to user
+-->
 
 ## Helpful links
 

@@ -89,17 +89,6 @@ io.on("connection", function(socket) {
   });
 });
 
-/*
-
-Message comes in
-Check what kind of message it is
- - Server message -> send message with class 'sever'
- - Normal message -> Send to everyone with class 'you', send to users with class 'me'
- - Play message -> Show as server message? Run function play
- - Help message -> Only send to user
-
-*/
-
 http.listen(port, function() {
   console.log("Listening on localhost:" + port);
 });

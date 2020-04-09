@@ -39,7 +39,6 @@ io.on("connection", function(socket) {
   function prepareNewUser() {
     io.emit("userlist", nicknames);
     socket.emit("new video", currentVideo);
-    socket.emit("video to", currentTime);
     socket.emit("playpause", playing);
   }
 

@@ -1,3 +1,5 @@
+require("dotenv").config();
+const fetch = require("node-fetch");
 const express = require("express");
 const app = express();
 const http = require("http").createServer(app);
@@ -50,6 +52,7 @@ io.on("connection", function(socket) {
       currentVideo = videoID;
       io.emit("new video", videoID);
       playing = true;
+      musixAPI(videoID);
     }
   });
 
@@ -88,6 +91,21 @@ io.on("connection", function(socket) {
     io.emit("playpause", playing);
   });
 });
+
+function musixAPI(videoID) {
+  const apiKey = process.env.API_KEY;
+  fetch(
+    "https://api.musixmatch.com/ws/1.1/track.search?q=" +
+      videoID +
+      "&apikey=" +
+      apiKey
+  )
+    .then(res => res.json())
+    .then(json => console.log(json));
+  socket.emit("get video title");
+
+  //Put video down, get video title, grab video title, do fetch, do another fetch, place for everyone
+}
 
 http.listen(port, function() {
   console.log("Listening on localhost:" + port);

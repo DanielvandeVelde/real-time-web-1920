@@ -1,7 +1,10 @@
 # Real-Time Web @cmda-minor-web · 2019-2020
 
+## Corona karaoke?
+
 A place to chat and watch YouTube videos together.  
-[Demo running here.](https://socket-1920.herokuapp.com/)
+[Demo running here.](https://socket-1920.herokuapp.com/)  
+Lyrics to karaoke to coming soon.
 
 ## Commands
 
@@ -86,6 +89,14 @@ When adding the script to them DOM with Javascript it initializes the YouTube if
 It also calls some events when the player is ready and loaded or when the state of the player changes.  
 I'm don't believe I'm using it to its full potential yet, but just using their player variable helps a lot.
 
+## Data Lifecycle diagram
+
+A Data Lifecycle diagram is supposed to show how data flow through an application.  
+Since I'm not yet at my final version this is a very simplified look of how things actually are at the moment.  
+There's a lot more back and forth between the client and the server than shown here, but to keep things simple, this is the best you're going to get :-)
+
+<kbd>![Data Lifecycle Diagram](https://raw.githubusercontent.com/DanielvandeVelde/real-time-web-1920/master/DLD.svg?sanitize=true "Data Lifecycle Diagram")</kbd>
+
 ## TODO/Wishlist
 
 - [x] Playing the same video to all connected users
@@ -102,16 +113,9 @@ thoughts/questions:
 Send all messages to server and sort them there? (no client-side validation)  
 Add a volume slider?
 
-<!--
-Message comes in
-Check what kind of message it is
- - Server message -> send message with class 'sever'
- - Normal message -> Send to everyone with class 'you', send to users with class 'me'
- - Play message -> Show as server message? Run function play
- - Help message -> Only send to user
--->
-
 ## Helpful links
 
 - [Great YouTube RegEx on StackOverflow](https://stackoverflow.com/questions/5830387/how-do-i-find-all-youtube-video-ids-in-a-string-using-a-regex/6901180#6901180)
 - [YouTube iframe API](https://developers.google.com/youtube/iframe_api_reference)
+
+</details>

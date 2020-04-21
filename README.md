@@ -3,8 +3,27 @@
 ## Corona karaoke?
 
 A place to chat and watch YouTube videos together.  
+All the controls are shared (except for mute).  
 [Demo running here.](https://socket-1920.herokuapp.com/)  
-Lyrics to karaoke to coming soon.
+Lyrics to karaoke (when a suitable song is played) coming soon.
+
+## Installation
+
+```bash
+#Fork and then clone
+git clone https://github.com/<your username>/real-time-web-1920.git
+
+#Move to directory
+cd real-time-web-1920
+
+#Install dependencies
+npm i
+
+#Run app
+node index
+
+#App will be running on localhost:1337
+```
 
 ## Commands
 
@@ -14,6 +33,10 @@ Lyrics to karaoke to coming soon.
 Play will also accept just the ID, youtu.be, and many more.
 
 ## Technical stuff
+
+<details>
+
+<summary> Explained in some detail. Data Lifecycle Diagram shows the same. </summary>
 
 ### Client side
 
@@ -82,12 +105,24 @@ That way the playing-status for the video is always the same for everyone.
 
 The mute happens locally. You don't want to share everything with your friends :-)
 
-### YouTube iframe API
+</details>
+
+## YouTube iframe API
 
 The [YouTube iframe API](https://developers.google.com/youtube/iframe_api_reference) is pretty cool.  
 When adding the script to them DOM with Javascript it initializes the YouTube iframe and replaces the selected `<div>` and removes any extra work I would have with that.  
 It also calls some events when the player is ready and loaded or when the state of the player changes.  
-I'm don't believe I'm using it to its full potential yet, but just using their player variable helps a lot.
+I'm starting to use it to its full potential although just using their player variable helps a lot.
+
+## MusixMatch API
+
+The [MusixMatch API](https://developer.musixmatch.com/) is the one I'm using to get my lyrics.  
+With the free version I lack synced lyrics as well as translations and any licensing/commercial goodness.  
+The ratelimit is set at '2.000' calls a day' so that would probably be more than enough for me.
+Getting an API key is simple; you just have to sign up and the [documentation can be found here.](https://developer.musixmatch.com/documentation/)
+
+I'm using the `/track.search` endpoint for searching the title.  
+As well as the `/track.lyrics.get` endpoint for getting the lyrics once I know which song the user wants.
 
 ## Data Lifecycle diagram
 

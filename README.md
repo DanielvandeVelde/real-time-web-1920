@@ -32,16 +32,16 @@ node index
 
 Play will also accept just the ID, youtu.be, and many more.
 
-## Technical stuff
+## Socket events
 
 <details>
 
-<summary> Explained in some detail. Data Lifecycle Diagram shows the same. </summary>
+<summary> Explained in minor detail. </summary>
 
 ### Client side
 
 As soon as the window is loaded the `script.js` does several things.  
-It adds eventListeners to both the input for the nickname and the chatbox.  
+It adds eventListeners to both the input for the nickname and the chatbox to send the right socket event.  
 It also appends the `<script>` for the YouTube iframe API, more about that after I discuss the serverside.  
 The eventListeners for the different controls such as the buttons and the range are also added. These only use socket to emit something to the server.
 

@@ -20,9 +20,9 @@ cd real-time-web-1920
 npm install
 
 #Run app
-node index
+npm start
 
-#App will be running on localhost:1337
+#App will be listening on localhost:1337
 ```
 
 ## Commands
@@ -53,10 +53,11 @@ There is also a boolean that keeps track of whether the video is playing or if t
 ### Nickname
 
 ##### Socket event: 'new user'
+
 When the user joins they get a screen to type in their nickname.  
 That form already has some requirements built in, but they are tested again as soon as they reach the server.  
 I use a callback to give feedback to the user.  
-It checks:  
+It checks:
 
 - If the nickname already exists in the nicknames array on the server
 - If the nickname is empty or undefined
@@ -77,6 +78,7 @@ This userlist array gets send to the clientside where the element gets created/m
 ### Messages
 
 ##### Socket event: 'chat message'
+
 There is some clientside checking for messages, but this same happens on the serverside as well.
 We check if the user has a nickname (else they cheated the system!) and wether the message is not a bunch of empty spaces but also is less than 2000 characters.
 If so, the users nickname and message gets broadcast to all users.
@@ -91,6 +93,7 @@ When a message starts with `/play` this message will be send to the server not a
 ### New video
 
 ##### Socket event: 'new video'
+
 When a message starts with `/play` the client will discover this and send anything that comes after the `/play` to the server.  
 On the server a [regex](https://stackoverflow.com/questions/5830387/how-do-i-find-all-youtube-video-ids-in-a-string-using-a-regex/6901180#6901180) finds the videoID.  
 If a videoID is not found, the message is ignored.  
@@ -98,16 +101,20 @@ If a videoID is found it gets send to all users and the playing status is set to
 On the clientside the YouTube iframe API is used to change the video to the one requested by a user and then used to play the video.
 
 ### Play/pause
+
 ##### Socket event: 'playpause'
+
 When the play/pause button is clicked it gets send to the server.  
 There the current `playing` variable is updated and sent to all users to update their video to the current status.
 That way the playing-status for the video is always the same for everyone.
 
 ### Scrubbing
+
 ##### Socket event: 'video to'
+
 When the slider gets moved the value of this is calculated and send to the server.
 There is a variable there called `currentTime` that keeps track of at what point the video is.
-This gets updated on the server and send to all sockets so the time is the same for everyone. 
+This gets updated on the server and send to all sockets so the time is the same for everyone.
 It's a to-do to make sure the server keeps track of this time itself so people that join late get the right time as well.
 
 ### Mute

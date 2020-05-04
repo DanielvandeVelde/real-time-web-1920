@@ -42,6 +42,7 @@ io.on("connection", function(socket) {
     io.emit("userlist", nicknames);
     socket.emit("new video", currentVideo);
     socket.emit("playpause", playing);
+    //Get Rick Astley lyrics
   }
 
   socket.on("new video", function(messageValue) {
@@ -49,10 +50,15 @@ io.on("connection", function(socket) {
     const url = messageValue.substr(messageValue.indexOf(" ") + 1);
     const videoID = url.replace(re, `$1`);
     if (videoID) {
-      currentVideo = videoID;
       io.emit("new video", videoID);
       playing = true;
-      musixAPI(videoID);
+    }
+  });
+
+  socket.on("get lyrics", function(player) {
+    if (currentVideo != player.video_id) {
+      currentVideo = player.video_id;
+      musixAPI(player);
     }
   });
 
@@ -92,18 +98,46 @@ io.on("connection", function(socket) {
   });
 });
 
-function musixAPI(videoID) {
+function musixAPI(player) {
   const apiKey = process.env.API_KEY;
+  let cleanedTitle = player.title;
+  cleanedTitle = cleanedTitle.replace(/ *\([^)]*\) */g, ""); // ()
+  cleanedTitle = cleanedTitle.replace(/ *\[[^\]]*] */g, ""); // []
+  cleanedTitle = cleanedTitle.replace(/\s+/g, " ").trim();
+  const searchQuery = cleanedTitle;
+  console.log(searchQuery);
+
   fetch(
     "https://api.musixmatch.com/ws/1.1/track.search?q=" +
-      videoID +
+      searchQuery +
       "&apikey=" +
       apiKey
   )
     .then(res => res.json())
-    .then(json => console.log(json));
-  socket.emit("get video title");
-
+    .then(json => {
+      if (json.message.header.available > 0) {
+        const queryNum = json.message.body.track_list[0].track.track_id;
+        console.log(queryNum);
+        if (queryNum) {
+          fetch(
+            "https://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=" +
+              queryNum +
+              "&apikey=" +
+              apiKey
+          )
+            .then(res => res.json())
+            .then(json => {
+              console.log(json.message.body.lyrics);
+              io.emit("change lyrics", json.message.body.lyrics);
+            });
+        }
+      } else {
+        const lyrics = {
+          lyrics_body: "No lyrics found for: " + searchQuery
+        };
+        io.emit("change lyrics", lyrics);
+      }
+    });
   //Put video down, get video title, grab video title, do fetch, do another fetch, place for everyone
 }
 

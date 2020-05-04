@@ -1,4 +1,5 @@
 const socket = io();
+let lyricsSent = false;
 let player;
 
 window.addEventListener("load", () => {
@@ -139,10 +140,14 @@ function updateProgressBar() {
 
 function onStateChange(event) {
   if (event.data == 1) {
-    console.log("playing");
+    if (lyricsSent == false) {
+      playerData = player.getVideoData();
+      socket.emit("get lyrics", playerData);
+      lyricsSent = true;
+    }
   }
   if (event.data == 2) {
-    console.log("paused");
+    //socket.emit("playpause"); ?
   }
 }
 
@@ -167,8 +172,20 @@ socket.on("userlist", function(data) {
   createUserlist(data);
 });
 
+socket.on("change lyrics", function(data) {
+  changeLyrics(data);
+});
+
 function setNewTime(newTime) {
   player.seekTo(newTime);
+}
+
+function changeLyrics(lyrics) {
+  let lyricsHTML = lyrics.lyrics_body;
+  lyricsHTML = lyricsHTML.replace(/\n/g, "<br />");
+  let lyricElement = document.getElementById("lyrics");
+  lyricElement.textContent = "";
+  lyricElement.insertAdjacentHTML("beforeEnd", lyricsHTML);
 }
 
 socket.on("playpause", function(playing) {
@@ -266,6 +283,7 @@ function createUserlist(data) {
 
 //For when a new video comes in
 function createVideo(data) {
+  lyricsSent = false;
   player.cueVideoById(data);
   player.playVideo();
 }

@@ -17,7 +17,7 @@ git clone https://github.com/<your username>/real-time-web-1920.git
 cd real-time-web-1920
 
 #Install dependencies
-npm i
+npm install
 
 #Run app
 node index

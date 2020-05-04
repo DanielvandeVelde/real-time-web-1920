@@ -268,7 +268,15 @@ function createUserlist(data) {
   const details = document.getElementsByTagName("details")[0];
   const summary = document.getElementsByTagName("summary")[0];
   const userlist = document.getElementById("userlist");
-  const summaryText = data.length + " user(s) online";
+  let summaryText;
+  if (data.length > 1) {
+    summaryText = data.length + " users online!";
+    if (data.length < 10) {
+      summaryText += "!";
+    }
+  } else {
+    summaryText = "You're all alone";
+  }
   userlist.textContent = "";
 
   summary.textContent = summaryText;

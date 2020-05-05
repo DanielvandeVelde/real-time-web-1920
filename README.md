@@ -35,8 +35,8 @@ Play will also accept just the ID, youtu.be, and most other YouTube link variati
 ## Data Lifecycle diagram
 
 A Data Lifecycle diagram is supposed to show how data flow through an application.  
-There's a lot more back and forth between the client and the server than shown here, but to keep things simple, this is the best you're going to get :-)
-This shows a little more of a simplified view, for all the socket events that are going on, see the next chapter.
+There's a lot more back and forth between the client and the server than shown here, which will be in the next chapter.
+But to keep this diagram simple:
 
 <kbd>![Data Lifecycle Diagram](https://raw.githubusercontent.com/DanielvandeVelde/real-time-web-1920/master/DLD.png "Data Lifecycle Diagram")</kbd>
 

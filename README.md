@@ -42,22 +42,6 @@ There's a lot more back and forth between the client and the server than shown h
 
 ## Socket events
 
-<details>
-
-<summary> Explained in minor detail. </summary>
-
-### Client side
-
-As soon as the window is loaded the `script.js` does several things.  
-It adds eventListeners to both the input for the nickname and the chatbox to send the right socket event.  
-It also appends the `<script>` for the YouTube iframe API, more about that after I discuss the serverside.  
-The eventListeners for the different controls such as the buttons and the range are also added. These only use socket to emit something to the server.
-
-### Server side
-
-On the server there is always an array that holds the different usernames of everyone connected.  
-There is also a boolean that keeps track of whether the video is playing or if the video is paused so it is the same for all users.
-
 ### Nickname
 
 ##### Socket event: 'new user'
@@ -142,8 +126,6 @@ If there's no track found, we give the users a little message with the fact we d
 
 The mute happens locally. You don't want to share everything with your friends :-)
 
-</details>
-
 ## YouTube iframe API
 
 The [YouTube iframe API](https://developers.google.com/youtube/iframe_api_reference) is pretty cool.  
@@ -161,9 +143,97 @@ Getting an API key is simple; you just have to sign up and the [documentation ca
 I'm using the `/track.search` endpoint for searching a track.
 I clean up the title I get from the YouTube iframe API by removing anything between `()` and `[]`.
 I do this because most of the time YouTube video's have: (offical video) or [Full HD] or other weird stuff that will muddy up the search in the title.  
-After getting a result I use extract the track_id of the first result I get.  
+After getting a result I use extract the track_id of the first result I get.
+
 Then I use the `/track.lyrics.get` endpoint where I request the lyrics from that specific track_id.
 Once I get these lyrics I extract the actual lyrics from the data I get back and send these to the user.
+
+<details>
+
+<summary>
+Example of `/track.search` endpoint data
+</summary>
+
+```json
+{
+  "message": {
+    "header": {
+      "status_code": 200,
+      "execute_time": 0.031071901321411,
+      "available": 160
+    },
+    "body": {
+      "track_list": [
+        {
+          "track": {
+            "track_id": 45123464,
+            "track_name": "Never Gonna Give You Up (In The Style Of Rick Astley)",
+            "track_name_translation_list": [],
+            "track_rating": 1,
+            "commontrack_id": 19508392,
+            "instrumental": 0,
+            "explicit": 0,
+            "has_lyrics": 1,
+            "has_subtitles": 0,
+            "has_richsync": 0,
+            "num_favourite": 0,
+            "album_id": 16243360,
+            "album_name": "Karaoke Downloads - Disco Vol.9",
+            "artist_id": 24497428,
+            "artist_name": "Ameritz Karaoke Band",
+            "track_share_url": "https://www.musixmatch.com/lyrics/Ameritz-Karaoke-Band/Never-Gonna-Give-You-Up-In-The-Style-Of-Rick-Astley?utm_source=application&utm_campaign=api&utm_medium=Hogeschool+van+Den+Haag%3A1409619737399",
+            "track_edit_url": "https://www.musixmatch.com/lyrics/Ameritz-Karaoke-Band/Never-Gonna-Give-You-Up-In-The-Style-Of-Rick-Astley/edit?utm_source=application&utm_campaign=api&utm_medium=Hogeschool+van+Den+Haag%3A1409619737399",
+            "restricted": 0,
+            "updated_time": "2015-02-21T12:24:01Z",
+            "primary_genres": {
+              "music_genre_list": [
+                {
+                  "music_genre": {
+                    "music_genre_id": 14,
+                    "music_genre_parent_id": 34,
+                    "music_genre_name": "Pop",
+                    "music_genre_name_extended": "Pop",
+                    "music_genre_vanity": "Pop"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+
+<summary>
+Example of `/track.lyrics.get` endpoint data
+</summary>
+
+```json
+{
+  "message": {
+    "header": { "status_code": 200, "execute_time": 0.029282093048096 },
+    "body": {
+      "lyrics": {
+        "lyrics_id": 9880962,
+        "explicit": 0,
+        "lyrics_body": "We're no strangers to love\nYou know the rules and so do I\nA full commitment's what I'm thinking of\nYou wouldn't get this from any other guy\nI just wanna tell you how I'm feeling\nGotta make you understand\n\nNever gonna give you up,\nNever gonna let you down\n...\n\n******* This Lyrics is NOT for Commercial use *******\n(1409619737399)",
+        "script_tracking_url": "https://tracking.musixmatch.com/t1.0/m_js/e_1/sn_0/l_9880962/su_0/rs_0/tr_3vUCAD5SVY7qVU3PL04xWCCkupZYWFY35bPvMEgq5vMmVqmSAzpNTJTVgNfkApLgc8KhWWw6LYgKrA2aeRvDzACSAJ2RobNEGzk128SOOP4yZlpuWPNPQFmFoM0NkV3iuiZMjfEf_U8kPIKOMu3BLRq1AfbAafHKhKAnO4gFRZM_7T24XER45BFqr_hYUKcNxcP7k1m_03cHX7-d3BANb-S2QKxhZ6hM7qf-mE26kx0-mnrj9oc9XaY2-1YN3lQmeEX8vdIWlMdWl9_xu4nnIDJ-OvVYb_Y8T3t_plfKuUXFNX5Cr6wBUvDHyNKyDIWqCpfmA4ejuHeqBEkjVwD-AOTcwmDzOWsqWYmQP0FdaklO7uRL0SsNQL6vokiEk7l9WvhUo5xVO4pknGJe3icJG9M2jC3hpIz1_A7fb8hpp3tCrJ5LAKVBPd_9DKYzWQQRQZoNhQjXR_TsmvGp3Np6RHVzbOANR44dYpHVzhRE0qQJtv-JMZTyl7v0NbUF-HGNoC3W2I5b/",
+        "pixel_tracking_url": "https://tracking.musixmatch.com/t1.0/m_img/e_1/sn_0/l_9880962/su_0/rs_0/tr_3vUCALF3Ozg2SnMCsaP0o2R4KmUyU5pPlx_ouaYVH3KEh-FSo77WojBGJ4qH7u4z4-Y6zYdX6uiy7xuHxc_g5TGRaWHakhafoaAEUsCijEW8hNTy4pRJCfPSU1WlmJGNNQ3ACSeGxGgq00rDyZlIDEdvadw1tDrk9HlgQjp4kKbl19d9Hox53S1NEkg-rP8hNWGDg8EepImngWU_PsyIME5pjOoBHod0SNmVffaF7ia9lQz5gJ3_X2t6ynfG3ixCz9ZE5l13w5hgKu6qANYVrV-DsZ2NiAlYZmPYcDWGhQ0t84nO6aZI25nFpy7AqUy3XDdCcqsHKc3JkrLR0-3S91vJnULdYg7TxqkJkpZP2hjiTatirlXd28f6djNrYJzQQyKEUrB1Meel4bE1g0T7Mydzq3m3GSDKoye-eakMjrksNbt8g-sA0ghP_HcqakGV7eO3teQdnFfixJRYwc2SH7EmbaUGQaZuzBsP3rFGC36L6j7xXTuNITs3ldepsBRjPCMNaxyH/",
+        "lyrics_copyright": "Lyrics powered by www.musixmatch.com. This Lyrics is NOT for Commercial use and only 30% of the lyrics are returned.",
+        "updated_time": "2017-07-21T15:20:41Z"
+      }
+    }
+  }
+}
+```
+
+</details>
 
 ## TODO/Wishlist
 

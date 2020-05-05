@@ -4,9 +4,11 @@ const express = require("express");
 const app = express();
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
-let playing = false;
-let currentVideo = "dQw4w9WgXcQ";
-let currentTime = "";
+let video = {
+  playing: false,
+  currentVideo: "dQw4w9WgXcQ",
+  currentTime: ""
+};
 const nicknames = [];
 
 const port = process.env.PORT || 1337;
@@ -40,8 +42,8 @@ io.on("connection", function(socket) {
 
   function prepareNewUser() {
     io.emit("userlist", nicknames);
-    socket.emit("new video", currentVideo);
-    socket.emit("playpause", playing);
+    socket.emit("new video", video.currentVideo);
+    socket.emit("playpause", video.playing);
     //Get Rick Astley lyrics
   }
 
@@ -51,13 +53,13 @@ io.on("connection", function(socket) {
     const videoID = url.replace(re, `$1`);
     if (videoID) {
       io.emit("new video", videoID);
-      playing = true;
+      video.playing = true;
     }
   });
 
   socket.on("get lyrics", function(player) {
-    if (currentVideo != player.video_id) {
-      currentVideo = player.video_id;
+    if (video.currentVideo != player.video_id) {
+      video.currentVideo = player.video_id;
       musixAPI(player);
     }
   });
@@ -84,17 +86,17 @@ io.on("connection", function(socket) {
   });
 
   socket.on("video to", function(data) {
-    currentTime = data;
+    video.currentTime = data;
     io.emit("video to", data);
   });
 
   socket.on("playpause", function() {
-    if (playing == false) {
-      playing = true;
+    if (video.playing == false) {
+      video.playing = true;
     } else {
-      playing = false;
+      video.playing = false;
     }
-    io.emit("playpause", playing);
+    io.emit("playpause", video.playing);
   });
 });
 

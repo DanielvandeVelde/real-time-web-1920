@@ -147,6 +147,7 @@ function onStateChange(event) {
     }
   }
   if (event.data == 2) {
+    // Paused
     //socket.emit("playpause"); ?
   }
 }

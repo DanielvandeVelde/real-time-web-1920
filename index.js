@@ -105,7 +105,6 @@ function musixAPI(player) {
   cleanedTitle = cleanedTitle.replace(/ *\[[^\]]*] */g, ""); // []
   cleanedTitle = cleanedTitle.replace(/\s+/g, " ").trim();
   const searchQuery = cleanedTitle;
-  console.log(searchQuery);
 
   fetch(
     "https://api.musixmatch.com/ws/1.1/track.search?q=" +
@@ -117,7 +116,6 @@ function musixAPI(player) {
     .then(json => {
       if (json.message.header.available > 0) {
         const queryNum = json.message.body.track_list[0].track.track_id;
-        console.log(queryNum);
         if (queryNum) {
           fetch(
             "https://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=" +
@@ -127,7 +125,6 @@ function musixAPI(player) {
           )
             .then(res => res.json())
             .then(json => {
-              console.log(json.message.body.lyrics);
               io.emit("change lyrics", json.message.body.lyrics);
             });
         }

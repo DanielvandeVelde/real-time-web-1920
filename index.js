@@ -137,7 +137,6 @@ function musixAPI(player) {
         io.emit("change lyrics", lyrics);
       }
     });
-  //Put video down, get video title, grab video title, do fetch, do another fetch, place for everyone
 }
 
 http.listen(port, function() {

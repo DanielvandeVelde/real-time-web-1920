@@ -243,13 +243,13 @@ Example of `/track.lyrics.get` endpoint data
 - [x] Move video progress between all users
 - [x] Local mute button
 - [ ] Playing the exact video at the exact moment even when joining late
+- [x] Remember video
+- [ ] Count the time
 - [x] Better regex for YouTube urls/ids
-- [ ] Actual controls styling
+- [ ] Better styling for controls
 - [ ] Mobile styling
-
-thoughts/questions:  
-Send all messages to server and sort them there? (no client-side validation)  
-Add a volume slider?
+- [ ] Modules
+- [ ] Maybe add a volume slider?
 
 ## Helpful links
 

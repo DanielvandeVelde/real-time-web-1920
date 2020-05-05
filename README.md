@@ -1,11 +1,11 @@
 # Real-Time Web @cmda-minor-web · 2019-2020
 
-## Corona karaoke?
+## CoronaKaraokeTube
 
 A place to chat and watch YouTube videos together.  
 All the controls are shared (except for mute).  
 [Demo running here.](https://socket-1920.herokuapp.com/)  
-Lyrics to karaoke (when a suitable song is played) coming soon.
+Now also with lyrics when a song is playing, thanks to Musixmatch.
 
 ## Installation
 
@@ -30,7 +30,15 @@ npm start
 `!help` or `/help` will redirect you here.  
 `!play dQw4w9WgXcQ` or `/play https://www.youtube.com/watch?v=dQw4w9WgXcQ` will play the video.
 
-Play will also accept just the ID, youtu.be, and many more.
+Play will also accept just the ID, youtu.be, and most other YouTube link variations.
+
+## Data Lifecycle diagram
+
+A Data Lifecycle diagram is supposed to show how data flow through an application.  
+Since I'm not yet at my final version this is a very simplified look of how things actually are at the moment.  
+There's a lot more back and forth between the client and the server than shown here, but to keep things simple, this is the best you're going to get :-)
+
+<kbd>![Data Lifecycle Diagram](https://raw.githubusercontent.com/DanielvandeVelde/real-time-web-1920/master/DLD.svg?sanitize=true "Data Lifecycle Diagram")</kbd>
 
 ## Socket events
 
@@ -117,6 +125,19 @@ There is a variable there called `currentTime` that keeps track of at what point
 This gets updated on the server and send to all sockets so the time is the same for everyone.
 It's a to-do to make sure the server keeps track of this time itself so people that join late get the right time as well.
 
+### Lyrics
+
+#### Socket event: 'get lyrics'
+
+When a new video is added the lyrics-boolean on the client-side gets set to false.  
+As soon as the YouTube API is initialised and starts playing, the client grabs the title value from the YouTube-player variable.  
+Then the boolean gets set to true and the request for lyrics gets send to the server.
+The server checks and sets the `currentVideo` variable, so the lyrics don't get requested for the same video twice.  
+The title of the video gets send to the MusixMatch API to search for a track that fits.  
+If there's one or multiple, the track_id gets extracted from the first track and send back to the MusixMatch API but now asking for the lyrics to go with that track_id.
+Then those lyrics gets send to all the connected sockets.
+If there's no track found, we give the users a little message with the fact we didn't find anything.
+
 ### Mute
 
 The mute happens locally. You don't want to share everything with your friends :-)
@@ -137,16 +158,12 @@ With the free version I lack synced lyrics as well as translations and any licen
 The ratelimit is set at '2.000' calls a day' so that would probably be more than enough for me.
 Getting an API key is simple; you just have to sign up and the [documentation can be found here.](https://developer.musixmatch.com/documentation/)
 
-I'm using the `/track.search` endpoint for searching the title.  
-As well as the `/track.lyrics.get` endpoint for getting the lyrics once I know which song the user wants.
-
-## Data Lifecycle diagram
-
-A Data Lifecycle diagram is supposed to show how data flow through an application.  
-Since I'm not yet at my final version this is a very simplified look of how things actually are at the moment.  
-There's a lot more back and forth between the client and the server than shown here, but to keep things simple, this is the best you're going to get :-)
-
-<kbd>![Data Lifecycle Diagram](https://raw.githubusercontent.com/DanielvandeVelde/real-time-web-1920/master/DLD.svg?sanitize=true "Data Lifecycle Diagram")</kbd>
+I'm using the `/track.search` endpoint for searching a track.
+I clean up the title I get from the YouTube iframe API by removing anything between `()` and `[]`.
+I do this because most of the time YouTube video's have: (offical video) or [Full HD] or other weird stuff that will muddy up the search in the title.  
+After getting a result I use extract the track_id of the first result I get.  
+Then I use the `/track.lyrics.get` endpoint where I request the lyrics from that specific track_id.
+Once I get these lyrics I extract the actual lyrics from the data I get back and send these to the user.
 
 ## TODO/Wishlist
 

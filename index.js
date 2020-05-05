@@ -127,7 +127,14 @@ function musixAPI(player) {
           )
             .then(res => res.json())
             .then(json => {
-              io.emit("change lyrics", json.message.body.lyrics);
+              if (json.message.body.lyrics.lyrics_body) {
+                io.emit("change lyrics", json.message.body.lyrics);
+              } else {
+                const lyrics = {
+                  lyrics_body: "No lyrics found for: " + searchQuery
+                };
+                io.emit("change lyrics", lyrics);
+              }
             });
         }
       } else {
